@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Sarefli</string>
+    <string name="converter">Converter</string>
+    <string name="home">Home</string>
+    <string name="from">From</string>
+    <string name="amount">Amount</string>
+    <string name="_1">1</string>
+    <string name="to">To</string>
+    <string name="flip">Flip</string>
+    <string name="convert">Convert</string>
+    <string name="result">Result</string>
+    <string name="updated_51_mins_ago">Updated 51 mins ago</string>
+    <string name="logo">Logo</string>
+    <string name="today_s_rate">Today\'s rate</string>
+    <string name="buy">Buy</string>
+    <string name="_1_usd_at_23_700_lbp">1 USD at 23,700 LBP</string>
+    <string name="sell">Sell</string>
+    <string name="_1_usd_at_23_650_lbp">1 USD at 23,650 LBP</string>
+    <string name="at_2_01_pm_22_3_2022">at 2:01 PM 22-3-2022</string>
+    <string name="todo">TODO</string>
 </resources>
