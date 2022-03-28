@@ -7,6 +7,34 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/tv_updatedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunitosans_regular"
+        android:text="Updated 51 mins ago"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.581"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.465" />
+
+    <TextView
+        android:id="@+id/tv_updatedText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunitosans_regular"
+        android:text="at 2:01 PM 22-3-2022"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.612"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.504" />
+
+    <TextView
         android:id="@+id/tv_sellText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,7 +118,7 @@
         app:layout_constraintVertical_bias="0.335" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:rotation="0"
