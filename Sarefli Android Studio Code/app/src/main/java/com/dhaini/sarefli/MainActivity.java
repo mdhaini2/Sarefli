@@ -2,7 +2,9 @@ package com.dhaini.sarefli;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -17,4 +19,12 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
     }
+
+    public void goToCalculator(View view){
+        // Create an intent and start the the calculator activity
+        Intent i1 = new Intent(getApplicationContext(), Calculator.class);
+        startActivity(i1);
+    }
+
+
 }
