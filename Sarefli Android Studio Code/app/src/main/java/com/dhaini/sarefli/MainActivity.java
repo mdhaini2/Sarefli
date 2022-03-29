@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,18 +38,21 @@ public class MainActivity extends AppCompatActivity {
         String url = "http://10.0.2.2/TheBroallers/TheBroallers/api1.php";
         DownloadTask Task = new DownloadTask();
         Task.execute(url);
+
     }
 
     public class DownloadTask extends AsyncTask<String,Void,String> {
         protected String doInBackground(String... urls){
-            String result = "";
+
             URL url;
             HttpURLConnection http;
             try{
                 url = new URL(urls[0]);
                 http =(HttpURLConnection) url.openConnection();
+
                 InputStream in = http.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
+
                 BufferedReader br = new BufferedReader(reader);
                 StringBuilder sb = new StringBuilder();
 
@@ -56,12 +60,15 @@ public class MainActivity extends AppCompatActivity {
                 while((line = br.readLine())!= null){
                     sb.append(line + "\n");
                 }
-                br.close();
-                if(sb.toString().equalsIgnoreCase("Request Error")){
-
+                if(sb.toString().contains("Request Error")){
+                    doInBackground();
                 }
+                br.close();
+
                 Log.i("API",sb.toString());
-                Log.i("Lenght", String.valueOf(sb.toString().length()));
+                String[] word = sb.toString().split("");
+                Log.i("Buy",word[0]);
+
                 return sb.toString();
 
             }
