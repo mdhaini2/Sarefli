@@ -18,4 +18,8 @@
     <string name="_1_usd_at_23_650_lbp">1 USD at 23,650 LBP</string>
     <string name="at_2_01_pm_22_3_2022">at 2:01 PM 22-3-2022</string>
     <string name="todo">TODO</string>
+    <string-array name="List_of_currencies">
+        <item>USD</item>
+        <item>LBP</item>
+    </string-array>
 </resources>
