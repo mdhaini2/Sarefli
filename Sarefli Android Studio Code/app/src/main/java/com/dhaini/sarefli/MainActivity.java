@@ -8,7 +8,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -22,10 +25,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    TextView buy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +47,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         String url = "http://10.0.2.2/TheBroallers/TheBroallers/api1.php";
-        DownloadTask Task = new DownloadTask();
-        Task.execute(url);
+
+
+        apiCaller1 api1 = new apiCaller1();
+        api1.execute(url);
+
+
+
+        buy =  (TextView) findViewById(R.id.tv_buyText2);
 
     }
 
-    public class DownloadTask extends AsyncTask<String,Void,String> {
+    public class apiCaller1 extends AsyncTask<String,Void,String> {
         protected String doInBackground(String... urls){
 
             URL url;
             HttpURLConnection http;
+
             try{
                 url = new URL(urls[0]);
                 http =(HttpURLConnection) url.openConnection();
@@ -53,23 +71,17 @@ public class MainActivity extends AppCompatActivity {
                 InputStream in = http.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
 
-                BufferedReader br = new BufferedReader(reader);
-                StringBuilder sb = new StringBuilder();
+                BufferedReader breader = new BufferedReader(reader);
+                StringBuilder sbuilder = new StringBuilder();
 
-                String line;
-                while((line = br.readLine())!= null){
-                    sb.append(line + "\n");
+                String line = "";
+
+                while((line = breader.readLine())!= null){
+                    sbuilder.append(line + "\n");
                 }
-                if(sb.toString().contains("Request Error")){
-                    doInBackground();
-                }
-                br.close();
 
-                Log.i("API",sb.toString());
-                String[] word = sb.toString().split("");
-                Log.i("Buy",word[0]);
-
-                return sb.toString();
+                breader.close();
+                return sbuilder.toString();
 
             }
             catch(Exception e){
@@ -77,6 +89,18 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
 
+        }
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            try{
+
+
+            }
+            catch(Exception e){
+                e.printStackTrace();
+
+
+            }
         }
 
     }
@@ -86,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
         Intent i1 = new Intent(getApplicationContext(), Calculator.class);
         startActivity(i1);
     }
+
+
 
 
 }
