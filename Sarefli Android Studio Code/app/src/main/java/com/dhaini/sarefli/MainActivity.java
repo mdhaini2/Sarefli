@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     TextView sellText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        
         super.onCreate(savedInstanceState);
         // These lines remove the action and title bars
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -41,11 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
         buyText = (TextView) findViewById(R.id.tv_buyText2);
         sellText = (TextView) findViewById(R.id.tv_sellText2);
+
         // API 1 URL
-        String url = "http://10.0.2.2/TheBroallers/TheBroallers/api1.php";
+        String urlApi1 = "http://10.0.2.2/API's/api1.php";
         apiCaller1 api1 = new apiCaller1();
-        api1.execute(url);
+        api1.execute(urlApi1);
+
+
     }
+
 
     public class apiCaller1 extends AsyncTask<String,Void,String> {
         protected String doInBackground(String... urls){
@@ -74,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     doInBackground();
                 }
                 br.close();
-
+                Log.i("Error",sb.toString());
                 return sb.toString();
             }
             catch(Exception e){
@@ -85,24 +91,28 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String values){
             super.onPostExecute(values);
             try{
-                Log.i("Values",values);
-                DecimalFormat formatter = new DecimalFormat("#,###");
 
-                String[] splitValues = values.split("]");
+                  DecimalFormat formatter = new DecimalFormat("#,###");
 
-                String[] splitBuy = splitValues[0].split(",");
-                String buyRate = String.valueOf(formatter.format(Integer.parseInt(splitBuy[1]))) ;
-                String buyTimeStamp = splitBuy[0].substring(1);
+                  // Splitting the returned values from the api
+                  String[] splitValues = values.split("]");
 
-                Log.i("TimeStamp",convertTimeStamp(buyTimeStamp).toString());
-                Log.i("Buy rate",buyRate);
+                  // Getting the buy rate and its date
+                  String[] splitBuy = splitValues[0].split(",");
 
-                String[] splitSell = splitValues[1].split(",");
-                String sellRate = String.valueOf(formatter.format(Integer.parseInt(splitSell[1]))) ;
-                String sellTimeStamp = splitBuy[0].substring(1);
+                  // Using formatter function to put a comma after every 3 numbers
+                  String buyRate = String.valueOf(formatter.format(Integer.parseInt(splitBuy[1]))) ;
+                  String buyDate = convertTimeStamp(splitBuy[0].substring(1)).toString();
 
-                buyText.setText("1 USD at " + buyRate + " LBP");
-                sellText.setText("1 USD at " + sellRate + " LBP");
+                  // Getting the sell rate and its date
+                  String[] splitSell = splitValues[1].split(",");
+                  String sellRate = String.valueOf(formatter.format(Integer.parseInt(splitSell[1]))) ;
+                  String sellDate = convertTimeStamp(splitBuy[0].substring(1)).toString();
+
+                  buyText.setText("1 USD at " + buyRate + " LBP");
+                  sellText.setText("1 USD at " + sellRate + " LBP");
+
+
 
             }
             catch(Exception e){
@@ -118,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i1 = new Intent(getApplicationContext(), Calculator.class);
         startActivity(i1);
     }
+
 
     public Date convertTimeStamp(String timeStamp){
         long time = Long.parseLong(timeStamp);
