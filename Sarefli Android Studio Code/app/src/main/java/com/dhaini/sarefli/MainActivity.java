@@ -32,30 +32,33 @@ public class MainActivity extends AppCompatActivity {
         // These lines remove the action and title bars
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_main);
 
+        // API 1 URL
         String url = "http://10.0.2.2/TheBroallers/TheBroallers/api1.php";
         DownloadTask Task = new DownloadTask();
         Task.execute(url);
-
     }
 
     public class DownloadTask extends AsyncTask<String,Void,String> {
         protected String doInBackground(String... urls){
-
+            // URL and HTTP initialization to connect to API 1
             URL url;
             HttpURLConnection http;
+
             try{
                 url = new URL(urls[0]);
                 http =(HttpURLConnection) url.openConnection();
 
+                // Retrieve API 1 content
                 InputStream in = http.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
 
+                // Read API 1 content line by line
                 BufferedReader br = new BufferedReader(reader);
                 StringBuilder sb = new StringBuilder();
 
+                // Append API 1 content to empty string
                 String line;
                 while((line = br.readLine())!= null){
                     sb.append(line + "\n");
@@ -65,20 +68,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 br.close();
 
-                Log.i("API",sb.toString());
-                String[] word = sb.toString().split("");
-                Log.i("Buy",word[0]);
-
                 return sb.toString();
-
             }
             catch(Exception e){
                 e.printStackTrace();
                 return null;
             }
-
         }
-
     }
 
     public void goToCalculator(View view){
@@ -86,6 +82,4 @@ public class MainActivity extends AppCompatActivity {
         Intent i1 = new Intent(getApplicationContext(), Calculator.class);
         startActivity(i1);
     }
-
-
 }
