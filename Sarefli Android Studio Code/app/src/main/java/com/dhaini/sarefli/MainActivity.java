@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     TextView sellText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        
+
         super.onCreate(savedInstanceState);
         // These lines remove the action and title bars
         requestWindowFeature(Window.FEATURE_NO_TITLE);
