@@ -1,12 +1,28 @@
 package com.dhaini.sarefli;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.AsyncTaskLoader;
+
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +34,51 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
+
+        String url = "http://10.0.2.2/TheBroallers/TheBroallers/api1.php";
+        DownloadTask Task = new DownloadTask();
+        Task.execute(url);
+
+    }
+
+    public class DownloadTask extends AsyncTask<String,Void,String> {
+        protected String doInBackground(String... urls){
+
+            URL url;
+            HttpURLConnection http;
+            try{
+                url = new URL(urls[0]);
+                http =(HttpURLConnection) url.openConnection();
+
+                InputStream in = http.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+
+                BufferedReader br = new BufferedReader(reader);
+                StringBuilder sb = new StringBuilder();
+
+                String line;
+                while((line = br.readLine())!= null){
+                    sb.append(line + "\n");
+                }
+                if(sb.toString().contains("Request Error")){
+                    doInBackground();
+                }
+                br.close();
+
+                Log.i("API",sb.toString());
+                String[] word = sb.toString().split("");
+                Log.i("Buy",word[0]);
+
+                return sb.toString();
+
+            }
+            catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+
     }
 
     public void goToCalculator(View view){
