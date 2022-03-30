@@ -98,19 +98,6 @@
         app:layout_constraintVertical_bias="0.863"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <Spinner
-        android:id="@+id/sp_toValue"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:entries="@array/List_of_currencies"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.203"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.607"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <ImageView
         android:id="@+id/image_flipper"
         android:layout_width="wrap_content"
@@ -126,36 +113,6 @@
         app:layout_constraintVertical_bias="0.524"
         app:srcCompat="@drawable/component_1"
         tools:ignore="ImageContrastCheck" />
-
-    <Spinner
-        android:id="@+id/sp_fromValue"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:entries="@array/List_of_currencies"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.203"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.453"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <EditText
-        android:id="@+id/et_amountValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:fontFamily="@font/nunitosans_regular"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="@string/_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.263"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.297" />
 
     <TextView
         android:id="@+id/tv_toHeader"
@@ -184,5 +141,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.227" />
+
+    <EditText
+        android:id="@+id/num_amountValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.218"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
