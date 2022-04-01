@@ -19,7 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="@string/todo" />
 
 
     <Button
@@ -42,30 +43,34 @@
         android:id="@+id/num_amountValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_bg_outline"
         android:ems="10"
+        android:importantForAutofill="no"
         android:inputType="number"
+        android:labelFor="@id/tv_amountHeader"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.199"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.341" />
+        app:layout_constraintVertical_bias="0.341"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/tv_buyAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nunitosans_regular"
+        android:fontFamily="@font/nunitosans_bold"
         android:text="@string/buy"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.753" />
+        app:layout_constraintVertical_bias="0.76" />
 
     <TextView
         android:id="@+id/tv_toHeader"
@@ -86,19 +91,19 @@
         android:id="@+id/tv_sellAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nunitosans_regular"
+        android:fontFamily="@font/nunitosans_bold"
         android:text="@string/sell"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.831" />
+        app:layout_constraintVertical_bias="0.84" />
 
     <TextView
-        android:id="@+id/tv_forHeader"
+        android:id="@+id/tv_amountHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunitosans_regular"
@@ -110,10 +115,11 @@
         app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        app:layout_constraintVertical_bias="0.276"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/tv_amountHeader"
+        android:id="@+id/tv_fromHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunitosans_regular"
@@ -128,7 +134,7 @@
         app:layout_constraintVertical_bias="0.419" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/image_flip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -137,10 +143,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.592"
-        app:srcCompat="@drawable/flipicon" />
+        app:srcCompat="@drawable/flipicon"
+        android:contentDescription="@string/todo" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/image_lbpbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -149,10 +156,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.666"
-        app:srcCompat="@drawable/lebbar" />
+        app:srcCompat="@drawable/lebbar"
+        android:contentDescription="@string/todo" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/image_usdbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -161,33 +169,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499"
-        app:srcCompat="@drawable/usbar" />
+        app:srcCompat="@drawable/usbar"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/tv_sellAtRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="23,000 LBP"
+        android:text="@string/_23_000_lbp"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.329"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.831" />
+        app:layout_constraintVertical_bias="0.84" />
 
     <TextView
-        android:id="@+id/tv_buyAtRate2"
+        android:id="@+id/tv_buyAtRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="23,500 USD"
+        android:text="@string/_23_500_usd"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.753" />
+        app:layout_constraintVertical_bias="0.76" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
