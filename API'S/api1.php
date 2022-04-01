@@ -3,7 +3,6 @@
 include("simple_html_dom.php"); 
 
 // If we get error 401 when requesting for accesss, we send an error request message.
-<<<<<<< HEAD
 if(!$html = @file_get_contents('file:///D:/Desktop/rates.json')) {
     echo json_encode("Request Error!");
 }
@@ -21,27 +20,7 @@ $Last_sell_rate = end($Sell_rates);
 
 // Return to the front end the buy and sell rates as json object
 echo  json_encode($Last_sell_rate). json_encode($Last_buy_rate);        
-=======
-if(!$html = @file_get_contents('https://lirarate.org/wp-json/lirarate/v2/rates?currency=LBP')) {
-    $error = "Error";
-    echo json_encode($error);
-}
 
-// Else we fetch the latest sell and buy rates from the api.
-else{
-$htmlJson = json_decode($html, true);
-
-// Get the latest buy rate
-$buyRates = reset($htmlJson);
-$lastBuyRate = end($buyRates);
-
-// Get the latest sell rate
-$sellRates = end($htmlJson);
-$lastSellRate = end($sellRates);
-
-// Return to the front end the buy and sell rates as json object
-echo  json_encode($lastSellRate). json_encode($lastBuyRate);        
->>>>>>> 3be9a05d32b233d78f9449174aa461974f64b846
 
 
 }
