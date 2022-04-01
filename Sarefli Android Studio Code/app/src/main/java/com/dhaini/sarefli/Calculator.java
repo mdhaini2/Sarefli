@@ -3,6 +3,7 @@ package com.dhaini.sarefli;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,22 +12,29 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class Calculator extends AppCompatActivity {
     apiCaller2 api2;
     Button btnConverter;
     EditText num_amountValue;
-    TextView tv_fromCurrency;
-    TextView tv_toCurrency;
-    TextView num_result;
+    ImageView img_fromCurrency;
+    ImageView img_toCurrency;
+    String from = "USD";
+    String to = "LBP";
+    TextView tv_buyAtRate;
+    TextView tv_sellAtRate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +47,11 @@ public class Calculator extends AppCompatActivity {
 
         num_amountValue = (EditText) findViewById(R.id.num_amountValue);
         btnConverter = (Button) findViewById(R.id.btn_convert);
-        tv_fromCurrency = (TextView) findViewById(R.id.tv_fromCurrency);
-        tv_toCurrency = (TextView) findViewById(R.id.tv_toCurrency);
-        num_result = (TextView) findViewById(R.id.num_result);
+        img_fromCurrency = (ImageView) findViewById(R.id.image_usdbar);
+        img_toCurrency = (ImageView) findViewById(R.id.image_lbpbar);
+        tv_buyAtRate = (TextView) findViewById(R.id.tv_buyAtRate);
+        tv_sellAtRate = (TextView) findViewById(R.id.tv_sellAtRate);
+
 
     }
     public class apiCaller2 extends AsyncTask<String,Void,String> {
@@ -79,8 +89,19 @@ public class Calculator extends AppCompatActivity {
         protected void onPostExecute(String values){
             super.onPostExecute(values);
             try{
-                Log.i("Error",values);
-                num_result.setText(values);
+                Log.i("values",values.replace("\"\"",""));
+                NumberFormat formatter = NumberFormat.getInstance(Locale.US);
+                values.replace("\"\"", "" );
+                String[] splitValues = values.split(" ");
+                BigDecimal bigDecimalBuy = new BigDecimal(splitValues[0].trim());
+                BigDecimal bigDecimalSell = new BigDecimal(splitValues[1].trim());
+
+                String buyAt = String.valueOf(formatter.format(bigDecimalBuy));
+                String sellAt = String.valueOf(formatter.format(bigDecimalSell));
+
+                tv_buyAtRate.setText(buyAt + " " + to);
+                tv_sellAtRate.setText(sellAt + " " + to);
+
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -93,13 +114,17 @@ public class Calculator extends AppCompatActivity {
     public void goToHome(View view){
         // Create an intent and start the the main activity
         Intent i2 = new Intent(getApplicationContext(), MainActivity.class);
+        num_amountValue.setText("");
+        tv_buyAtRate.setText("");
+        tv_sellAtRate.setText("");
+
         startActivity(i2);
     }
     public void convert(View view){
         // Get the daily buy and sell rate from the main and extract from the interface the data we need to use to call api 2.
         String amount = num_amountValue.getText().toString();
-        String internal = tv_fromCurrency.getText().toString();
-        String external = tv_toCurrency.getText().toString();
+        String internal = from;
+        String external = to;
         Intent intent =getIntent();
         String buyRate = intent.getStringExtra(MainActivity.buyDailyRate).split(" ")[3].replace(",","");
         String sellRate = intent.getStringExtra(MainActivity.sellDailyRate).split(" ")[3].replace(",","");
@@ -111,6 +136,20 @@ public class Calculator extends AppCompatActivity {
         //call api2 and execute
         api2 = new apiCaller2();
         api2.execute(urlApi2);
+
+    }
+    public void changeCurrency(View view){
+        String temp = from;
+        from = to;
+        to = temp;
+        if(from.equalsIgnoreCase("USD")){
+            img_fromCurrency.setImageResource(R.drawable.usbar);
+            img_toCurrency.setImageResource(R.drawable.lebbar);
+        }else{
+            img_fromCurrency.setImageResource(R.drawable.lebbar);
+            img_toCurrency.setImageResource(R.drawable.usbar);
+        }
+
 
     }
 }

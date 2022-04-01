@@ -19,7 +19,7 @@ date_default_timezone_set('Asia/Beirut');
 $date = date('Y-m-d H:i:s');
 
 // Convert Buy and Sell rates from USD to LBP and vice versa  
-if($Internal == "USD"){ 
+if($internal == "USD"){ 
     $resultBuy = $amount * $dailyRateBuy;
     $resultSell = $amount * $dailyRateSell;
 }
