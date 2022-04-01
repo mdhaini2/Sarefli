@@ -1,33 +1,40 @@
 <?php
-include("DB_info.php"); //connecting with the database 
 
-$Amount = floatval($_GET["Amount"]); //get those data from the front end
-$Internal = $_GET["Internal"];
-$External = $_GET["External"];
-$Daily_Rate_Buy = floatval($_GET["Daily_Rate_Buy"]);   
-$Daily_Rate_Sell = floatval($_GET["Daily_Rate_Sell"]);
+// Connecting to the database 
+include("DB_info.php");
 
-$Result_buy =0; //default result
-$Result_sell =0;
+// Get data from the front end
+$amount = floatval($_GET["Amount"]);
+$internal = $_GET["Internal"];
+$external = $_GET["External"];
+$dailyRateBuy = floatval($_GET["Daily_Rate_Buy"]);   
+$dailyRateSell = floatval($_GET["Daily_Rate_Sell"]);
 
-date_default_timezone_set('Asia/Beirut'); //get date and time for each conversion
+// Initial result 
+$resultBuy =0; 
+$resultSell =0;
+
+// Get date and time for each conversion
+date_default_timezone_set('Asia/Beirut'); 
 $date = date('Y-m-d H:i:s');
 
-if($Internal == "USD"){ //converting the ammount to USD or LBP for the sell and buy rates
-    $Result_buy = $Amount * $Daily_Rate_Buy;
-    $Result_sell = $Amount * $Daily_Rate_Sell;
+// Convert Buy and Sell rates from USD to LBP and vice versa  
+if($Internal == "USD"){ 
+    $resultBuy = $amount * $dailyRateBuy;
+    $resultSell = $amount * $dailyRateSell;
 }
 else{
-    $Result_buy = $Amount / $Daily_Rate_Buy;
-    $Result_sell = $Amount / $Daily_Rate_Sell;
+    $resultBuy = $amount / $dailyRateBuy;
+    $resultSell = $amount / $dailyRateSell;
     
 }
+// query to store the conversion to the database ("Conversions_history")
+$query =   $mysqli->prepare("INSERT INTO conversions_history (amount,internal,external,buy_daily_rate,sell_daily_rate,buy_result,sell_result,time) VALUES('$amount','$internal',
+'$external','$dailyRateBuy','$dailyRateSell','$resultBuy','$resultSell','$date')"); 
 
-$query =   $mysqli->prepare("INSERT INTO conversions_history (amount,internal,external,buy_daily_rate,sell_daily_rate,buy_result,sell_result,time) VALUES('$Amount','$Internal',
-'$External','$Daily_Rate_Buy','$Daily_Rate_Sell','$Result_buy','$Result_sell','$date')"); //Storing the conversion to the database ("Conversions_history")
+//  Executing the query
+$query->execute(); 
 
-$query->execute(); //executing the query
-
-
-echo json_encode($Result_buy)." ".json_encode($Result_sell); //returning the result to the front end as JSON
+ // return the buy and sell result rates to the front end as JSON object
+echo json_encode($resultBuy)." ".json_encode($resultSell);
 ?>
