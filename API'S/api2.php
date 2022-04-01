@@ -26,6 +26,8 @@ if($internal == "USD"){
 else{
     $resultBuy = $amount / $dailyRateBuy;
     $resultSell = $amount / $dailyRateSell;
+    $resultBuy = round($resultBuy, 3);
+    $resultSell = round($resultSell, 3);
     
 }
 // query to store the conversion to the database ("Conversions_history")

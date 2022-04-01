@@ -1,14 +1,12 @@
 package com.dhaini.sarefli;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.content.AsyncTaskLoader;
 
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -16,25 +14,31 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String buyDailyRate = "com.dhaini.sarefli.dhaini.buyDailyRate";
+    public static final String sellDailyRate = "com.dhaini.sarefli.dhaini.sellDailyRate";
+    private Handler handler = new Handler();
     TextView buyText;
     TextView sellText;
     apiCaller1 api1;
-    public static final String buyDailyRate = "com.dhaini.sarefli.dhaini.buyDailyRate";
-    public static final String sellDailyRate = "com.dhaini.sarefli.dhaini.sellDailyRate";
+    TextView tv_updatedText;
+    TextView tv_updatedText2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -46,16 +50,48 @@ public class MainActivity extends AppCompatActivity {
 
         buyText = (TextView) findViewById(R.id.tv_buyText2);
         sellText = (TextView) findViewById(R.id.tv_sellText2);
+        tv_updatedText = (TextView)findViewById(R.id.tv_updatedText);
+        tv_updatedText2 = (TextView) findViewById(R.id.tv_updatedText2);
+
+        // Timer every minute update the period of the last rate update
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public int i=1;
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        //Display last update to the UI
+                        tv_updatedText.setText("Updated " + i++ + " mins ago");
+
+                    }
+                });
+            }
+        }, 0, 60000);
+
+        // Get Date and time from last update
+        Calendar rightNow = Calendar.getInstance();
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        int minute = rightNow.get(Calendar.MINUTE);
+        int day = rightNow.get(Calendar.DAY_OF_MONTH);
+        int month = rightNow.get(Calendar.MONTH)+1;
+        int year = rightNow.get(Calendar.YEAR);
+
+        // Display Date and time to the UI
+        tv_updatedText2.setText("at "+hour + ":"+ minute+ " " + day+"-"+month+"-"+year);
+
 
         // Call API 1 and Execute
         String urlApi1 = "http://10.0.2.2/API's/api1.php";
         api1 = new apiCaller1();
         api1.execute(urlApi1);
 
-
-
     }
 
+    public void refreshButton(View view){
+        // Refresh Home Page
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
 
     public class apiCaller1 extends AsyncTask<String,Void,String> {
         protected String doInBackground(String... urls){
@@ -103,12 +139,10 @@ public class MainActivity extends AppCompatActivity {
 
                   // Using formatter function to put a comma after every 3 numbers
                   String buyRate = String.valueOf(formatter.format(Integer.parseInt(splitBuy[1]))) ;
-                  String buyDate = convertTimeStamp(splitBuy[0].substring(1)).toString();
 
                   // Getting the sell rate and its date
                   String[] splitSell = splitValues[1].split(",");
                   String sellRate = String.valueOf(formatter.format(Integer.parseInt(splitSell[1]))) ;
-                  String sellDate = convertTimeStamp(splitBuy[0].substring(1)).toString();
 
                   // Setting the updated buy and sell rates to the interface
                   buyText.setText("1 USD at " + buyRate + " LBP");
@@ -127,17 +161,10 @@ public class MainActivity extends AppCompatActivity {
         // Create an intent and start the the calculator activity
         Intent goToCalculator = new Intent(getApplicationContext(), Calculator.class);
 
-        // Sending buy and sell rates to the calculator acvity
+        // Sending buy and sell rates to the calculator activity
         goToCalculator.putExtra(buyDailyRate,buyText.getText().toString());
         goToCalculator.putExtra(sellDailyRate,sellText.getText().toString());
 
         startActivity(goToCalculator);
-    }
-
-
-    public Date convertTimeStamp(String timeStamp){
-        long time = Long.parseLong(timeStamp);
-        Date date = new Date(time);
-        return date;
     }
 }

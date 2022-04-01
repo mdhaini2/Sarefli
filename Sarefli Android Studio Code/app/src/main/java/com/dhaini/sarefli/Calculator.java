@@ -52,6 +52,10 @@ public class Calculator extends AppCompatActivity {
         tv_buyAtRate = (TextView) findViewById(R.id.tv_buyAtRate);
         tv_sellAtRate = (TextView) findViewById(R.id.tv_sellAtRate);
 
+        // Initials
+        num_amountValue.setText("");
+        tv_buyAtRate.setText("");
+        tv_sellAtRate.setText("");
 
     }
     public class apiCaller2 extends AsyncTask<String,Void,String> {
@@ -61,6 +65,7 @@ public class Calculator extends AppCompatActivity {
             HttpURLConnection http;
 
             try{
+                // Connect to API 2
                 url = new URL(urls[0]);
                 http =(HttpURLConnection) url.openConnection();
 
@@ -77,6 +82,8 @@ public class Calculator extends AppCompatActivity {
                     sb.append(line + "\n");
                 }
                 br.close();
+
+                // Return content from API2
                 return sb.toString();
 
 
@@ -89,9 +96,11 @@ public class Calculator extends AppCompatActivity {
         protected void onPostExecute(String values){
             super.onPostExecute(values);
             try{
-                Log.i("values",values.replace("\"\"",""));
+
                 NumberFormat formatter = NumberFormat.getInstance(Locale.US);
                 values.replace("\"\"", "" );
+
+                // Splitting the buy and sell results rates returned from API 2
                 String[] splitValues = values.split(" ");
                 BigDecimal bigDecimalBuy = new BigDecimal(splitValues[0].trim());
                 BigDecimal bigDecimalSell = new BigDecimal(splitValues[1].trim());
@@ -99,13 +108,13 @@ public class Calculator extends AppCompatActivity {
                 String buyAt = String.valueOf(formatter.format(bigDecimalBuy));
                 String sellAt = String.valueOf(formatter.format(bigDecimalSell));
 
+                // Displaying to the UI
                 tv_buyAtRate.setText(buyAt + " " + to);
                 tv_sellAtRate.setText(sellAt + " " + to);
 
             }
             catch(Exception e){
                 e.printStackTrace();
-
 
             }
         }
@@ -114,12 +123,14 @@ public class Calculator extends AppCompatActivity {
     public void goToHome(View view){
         // Create an intent and start the the main activity
         Intent i2 = new Intent(getApplicationContext(), MainActivity.class);
+        // Initials
         num_amountValue.setText("");
         tv_buyAtRate.setText("");
         tv_sellAtRate.setText("");
 
         startActivity(i2);
     }
+
     public void convert(View view){
         // Get the daily buy and sell rate from the main and extract from the interface the data we need to use to call api 2.
         String amount = num_amountValue.getText().toString();
@@ -142,6 +153,8 @@ public class Calculator extends AppCompatActivity {
         String temp = from;
         from = to;
         to = temp;
+
+        // Swapping images
         if(from.equalsIgnoreCase("USD")){
             img_fromCurrency.setImageResource(R.drawable.usbar);
             img_toCurrency.setImageResource(R.drawable.lebbar);
