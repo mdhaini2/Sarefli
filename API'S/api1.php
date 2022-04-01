@@ -3,7 +3,9 @@
 include("simple_html_dom.php"); 
 
 // If we get error 401 when requesting for accesss, we send an error request message.
-if(!$html = @file_get_contents('https://lirarate.org/wp-json/lirarate/v2/rates?currency=LBP')) {
+
+if(!$html = @file_get_contents('file:///D:/Desktop/rates.json')) {
+
     echo json_encode("Request Error!");
 }
  // Else we fetch the latest sell and buy rates from the api.

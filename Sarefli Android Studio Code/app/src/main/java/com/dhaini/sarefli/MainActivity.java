@@ -32,6 +32,9 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     TextView buyText;
     TextView sellText;
+    apiCaller1 api1;
+    public static final String buyDailyRate = "com.dhaini.sarefli.dhaini.buyDailyRate";
+    public static final String sellDailyRate = "com.dhaini.sarefli.dhaini.sellDailyRate";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -44,10 +47,11 @@ public class MainActivity extends AppCompatActivity {
         buyText = (TextView) findViewById(R.id.tv_buyText2);
         sellText = (TextView) findViewById(R.id.tv_sellText2);
 
-        // API 1 URL
+        // Call API 1 and Execute
         String urlApi1 = "http://10.0.2.2/API's/api1.php";
-        apiCaller1 api1 = new apiCaller1();
+        api1 = new apiCaller1();
         api1.execute(urlApi1);
+
 
 
     }
@@ -76,11 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 while((line = br.readLine())!= null){
                     sb.append(line + "\n");
                 }
-                if(sb.toString().contains("Request Error")){
-                    doInBackground();
-                }
+
                 br.close();
-                Log.i("Error",sb.toString());
                 return sb.toString();
             }
             catch(Exception e){
@@ -109,10 +110,9 @@ public class MainActivity extends AppCompatActivity {
                   String sellRate = String.valueOf(formatter.format(Integer.parseInt(splitSell[1]))) ;
                   String sellDate = convertTimeStamp(splitBuy[0].substring(1)).toString();
 
+                  // Setting the updated buy and sell rates to the interface
                   buyText.setText("1 USD at " + buyRate + " LBP");
                   sellText.setText("1 USD at " + sellRate + " LBP");
-
-
 
             }
             catch(Exception e){
@@ -125,8 +125,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToCalculator(View view){
         // Create an intent and start the the calculator activity
-        Intent i1 = new Intent(getApplicationContext(), Calculator.class);
-        startActivity(i1);
+        Intent goToCalculator = new Intent(getApplicationContext(), Calculator.class);
+
+        // Sending buy and sell rates to the calculator acvity
+        goToCalculator.putExtra(buyDailyRate,buyText.getText().toString());
+        goToCalculator.putExtra(sellDailyRate,sellText.getText().toString());
+
+        startActivity(goToCalculator);
     }
 
 
