@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         tv_updatedText = (TextView)findViewById(R.id.tv_updatedText);
         tv_updatedText2 = (TextView) findViewById(R.id.tv_updatedText2);
 
-        // Timer every minute update the period of the last rate update
+        // Timer for every minute we update the period of time we updated the rates
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public int i=1;
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         int year = rightNow.get(Calendar.YEAR);
 
         // Display Date and time to the UI
-        tv_updatedText2.setText("at "+hour + ":"+ minute+ " " + day+"-"+month+"-"+year);
+        tv_updatedText2.setText("at "+ hour + ":"+ minute + " " + day + "-" + month + "-" + year);
 
 
         // Call API 1 and Execute
