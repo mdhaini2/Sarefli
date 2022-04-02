@@ -25,6 +25,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     apiCaller1 api1;
     TextView tv_updatedText;
     TextView tv_updatedText2;
+    ImageView refreshButton;
+    Animation rotateAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         sellText = (TextView) findViewById(R.id.tv_sellText2);
         tv_updatedText = (TextView)findViewById(R.id.tv_updatedText);
         tv_updatedText2 = (TextView) findViewById(R.id.tv_updatedText2);
+        refreshButton = (ImageView) findViewById(R.id.image_refresh);
 
         // Timer for every minute we update the period of time we updated the rates
         Timer timer = new Timer();
@@ -67,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }, 0, 60000);
+
+        // Rotate animation
+        rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        refreshButton.setAnimation(rotateAnimation);
+
 
         // Get Date and time from last update
         Calendar rightNow = Calendar.getInstance();
