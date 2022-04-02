@@ -7,6 +7,7 @@ import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -112,15 +113,15 @@ public class Calculator extends AppCompatActivity {
                 String sellAt = "Sell " + String.valueOf(formatter.format(bigDecimalSell));
 
                 // SpannableStringBuilder containing text to display allowing us to bold certain characters
-                SpannableStringBuilder sbBuy = new SpannableStringBuilder(buyAt);
-                SpannableStringBuilder sbSell = new SpannableStringBuilder(sellAt);
+                SpannableString sbBuy = new SpannableString(buyAt);
+                SpannableString sbSell = new SpannableString(sellAt);
 
                 // Create a bold StyleSpan to be used on the SpannableStringBuilder
                 StyleSpan bold = new StyleSpan(android.graphics.Typeface.BOLD);
 
                 // Set only the first part of the SpannableStringBuilder to be bold
-                sbBuy.setSpan(bold, 0, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE); // make first 4 characters Bold
-                sbSell.setSpan(bold, 0, 3, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                sbBuy.setSpan(bold, 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                sbSell.setSpan(bold, 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 // Displaying to the UI
                 tv_buyAtRate.setText(sbBuy + " " + to);
