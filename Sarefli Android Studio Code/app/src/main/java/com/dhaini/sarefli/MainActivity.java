@@ -71,13 +71,29 @@ public class MainActivity extends AppCompatActivity {
         // Get Date and time from last update
         Calendar rightNow = Calendar.getInstance();
         int hour = rightNow.get(Calendar.HOUR_OF_DAY);
-        int minute = rightNow.get(Calendar.MINUTE);
+        int minutes = rightNow.get(Calendar.MINUTE);
         int day = rightNow.get(Calendar.DAY_OF_MONTH);
         int month = rightNow.get(Calendar.MONTH)+1;
         int year = rightNow.get(Calendar.YEAR);
 
         // Display Date and time to the UI
-        tv_updatedText2.setText("at "+ hour + ":"+ minute + " " + day + "-" + month + "-" + year);
+        String strHour = String.valueOf(hour);;
+        String strMinutes = String.valueOf(minutes);
+        String strDay = String.valueOf(day);
+        String strMonth = String.valueOf(month);
+        if(hour<10){
+            strHour = "0" + strHour;
+        }
+        if(minutes<10){
+            strMinutes = "0" + strHour;
+        }
+        if(day <10){
+            strDay = "0" + strDay;
+        }
+        if(month<10){
+            strMonth = "0" + month;
+        }
+        tv_updatedText2.setText("at "+ strHour + ":"+ strMinutes + " " + strDay + "-" + strMonth + "-" + year);
 
 
         // Call API 1 and Execute
