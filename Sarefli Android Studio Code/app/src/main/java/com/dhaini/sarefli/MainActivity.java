@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         tv_updatedText2 = (TextView) findViewById(R.id.tv_updatedText2);
         refreshButton = (ImageView) findViewById(R.id.image_refresh);
         rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        refreshButton.setAnimation(rotateAnimation);
 
         // Timer for every minute we update the period of time we updated the rates
         Timer timer = new Timer();
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         api1.execute(urlApi1);
 
         // Rotate animation
-        refreshButton.setAnimation(rotateAnimation);
+        refreshButton.startAnimation(rotateAnimation);
 
     }
 
