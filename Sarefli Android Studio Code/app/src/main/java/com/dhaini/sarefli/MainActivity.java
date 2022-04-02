@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     apiCaller1 api1;
     TextView tv_updatedText;
     TextView tv_updatedText2;
-
+    public int updateTimer=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
         // Timer for every minute we update the period of time we updated the rates
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
-            public int i=1;
+
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
                         //Display last update to the UI
-                        tv_updatedText.setText("Updated " + i++ + " mins ago");
+                        tv_updatedText.setText("Updated " + updateTimer++ + " mins ago");
 
                     }
                 });
@@ -77,24 +77,7 @@ public class MainActivity extends AppCompatActivity {
         int year = rightNow.get(Calendar.YEAR);
 
         // Display Date and time to the UI
-        String strHour = String.valueOf(hour);;
-        String strMinutes = String.valueOf(minutes);
-        String strDay = String.valueOf(day);
-        String strMonth = String.valueOf(month);
-        if(hour<10){
-            strHour = "0" + strHour;
-        }
-        if(minutes<10){
-            strMinutes = "0" + strHour;
-        }
-        if(day <10){
-            strDay = "0" + strDay;
-        }
-        if(month<10){
-            strMonth = "0" + month;
-        }
-        tv_updatedText2.setText("at "+ strHour + ":"+ strMinutes + " " + strDay + "-" + strMonth + "-" + year);
-
+        displayTime();
 
         // Call API 1 and Execute
         String urlApi1 = "http://10.0.2.2/API's/api1.php";
@@ -104,9 +87,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshButton(View view){
-        // Refresh Home Page
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+
+        // Updating date and time and resetting the timer
+        updateTimer =1;
+        displayTime();
+
+        // Recalling API1 to get the latest rates
+        String urlApi1 = "http://10.0.2.2/API's/api1.php";
+        api1 = new apiCaller1();
+        api1.execute(urlApi1);
+
     }
 
     public class apiCaller1 extends AsyncTask<String,Void,String> {
@@ -182,5 +172,34 @@ public class MainActivity extends AppCompatActivity {
         goToCalculator.putExtra(sellDailyRate,sellText.getText().toString());
 
         startActivity(goToCalculator);
+    }
+    public void displayTime(){
+        // Get Date and time from last update
+        Calendar rightNow = Calendar.getInstance();
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        int minutes = rightNow.get(Calendar.MINUTE);
+        int day = rightNow.get(Calendar.DAY_OF_MONTH);
+        int month = rightNow.get(Calendar.MONTH)+1;
+        int year = rightNow.get(Calendar.YEAR);
+
+        // Display Date and time to the UI
+        String strHour = String.valueOf(hour);;
+        String strMinutes = String.valueOf(minutes);
+        String strDay = String.valueOf(day);
+        String strMonth = String.valueOf(month);
+        if(hour<10){
+            strHour = "0" + strHour;
+        }
+        if(minutes<10){
+            strMinutes = "0" + strHour;
+        }
+        if(day <10){
+            strDay = "0" + strDay;
+        }
+        if(month<10){
+            strMonth = "0" + month;
+        }
+        tv_updatedText2.setText("at "+ strHour + ":"+ strMinutes + " " + strDay + "-" + strMonth + "-" + year);
+
     }
 }
