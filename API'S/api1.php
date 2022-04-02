@@ -1,13 +1,11 @@
 <?php
-// Library to get built in functions  we used to get content from web api
+// Library to get built in functions we used to get content from web API
 include("simple_html_dom.php"); 
 
-// If we get error 401 when requesting for accesss, we send an error request message.
+// Send error request message incase of error 401
 if(!$html = file_get_contents('https://lirarate.org/wp-json/lirarate/v2/rates?currency=LBP')) {
-
     $error = "Error";
     echo json_encode($error);
-    
 }
  // Else we fetch the latest sell and buy rates from the api.
 else{
@@ -22,8 +20,7 @@ $lastBuyRate = end($buyRates);
 $sellRates = end($htmlJson);
 $lastSellRate = end($sellRates);
 
-// Return to the front end the buy and sell rates as json object
+// Return the buy and sell rates as JSON objects
 echo  json_encode($lastSellRate). json_encode($lastBuyRate);        
-
 }
 
