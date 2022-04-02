@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_updatedText2;
     ImageView refreshButton;
     Animation rotateAnimation;
-    public int updateTimer=1;
+    public int updateTimer = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +78,6 @@ public class MainActivity extends AppCompatActivity {
         }, 0, 60000);
 
 
-
-
-        // Get Date and time from last update
-        Calendar rightNow = Calendar.getInstance();
-        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
-        int minutes = rightNow.get(Calendar.MINUTE);
-        int day = rightNow.get(Calendar.DAY_OF_MONTH);
-        int month = rightNow.get(Calendar.MONTH)+1;
-        int year = rightNow.get(Calendar.YEAR);
-
         // Display Date and time to the UI
         displayTime();
 
@@ -101,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
     public void refreshButton(View view){
 
         // Updating date and time and resetting the timer
-        updateTimer =1;
+        updateTimer = 1;
+        tv_updatedText.setText("Updated " + updateTimer++ + " mins ago");
         displayTime();
 
         // Recalling API1 to get the latest rates

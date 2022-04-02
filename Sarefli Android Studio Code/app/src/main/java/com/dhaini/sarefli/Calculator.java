@@ -3,13 +3,13 @@ package com.dhaini.sarefli;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,14 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -112,15 +110,15 @@ public class Calculator extends AppCompatActivity {
                 String sellAt = "Sell " + String.valueOf(formatter.format(bigDecimalSell));
 
                 // SpannableStringBuilder containing text to display allowing us to bold certain characters
-                SpannableStringBuilder sbBuy = new SpannableStringBuilder(buyAt);
-                SpannableStringBuilder sbSell = new SpannableStringBuilder(sellAt);
+                SpannableString sbBuy = new SpannableString(buyAt);
+                SpannableString sbSell = new SpannableString(sellAt);
 
                 // Create a bold StyleSpan to be used on the SpannableStringBuilder
-                StyleSpan bold = new StyleSpan(android.graphics.Typeface.BOLD);
+                StyleSpan bold = new StyleSpan(Typeface.BOLD);
 
                 // Set only the first part of the SpannableStringBuilder to be bold
-                sbBuy.setSpan(bold, 0, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE); // make first 4 characters Bold
-                sbSell.setSpan(bold, 0, 3, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                sbBuy.setSpan(bold, 0, 2, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE); // make first 4 characters Bold
+                sbSell.setSpan(bold, 0, 3, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 // Displaying to the UI
                 tv_buyAtRate.setText(sbBuy + " " + to);
