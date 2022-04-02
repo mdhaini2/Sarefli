@@ -108,8 +108,8 @@ public class Calculator extends AppCompatActivity {
                 BigDecimal bigDecimalBuy = new BigDecimal(splitValues[0].trim());
                 BigDecimal bigDecimalSell = new BigDecimal(splitValues[1].trim());
 
-                String buyAt = "Buy" + String.valueOf(formatter.format(bigDecimalBuy));
-                String sellAt = "Sell" + String.valueOf(formatter.format(bigDecimalSell));
+                String buyAt = "Buy " + String.valueOf(formatter.format(bigDecimalBuy));
+                String sellAt = "Sell " + String.valueOf(formatter.format(bigDecimalSell));
 
                 // SpannableStringBuilder containing text to display allowing us to bold certain characters
                 SpannableStringBuilder sbBuy = new SpannableStringBuilder(buyAt);
