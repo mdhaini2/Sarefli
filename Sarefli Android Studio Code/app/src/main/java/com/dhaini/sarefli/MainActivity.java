@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_updatedText2;
     ImageView refreshButton;
     Animation rotateAnimation;
+    public int updateTimer=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,25 +59,24 @@ public class MainActivity extends AppCompatActivity {
         tv_updatedText = (TextView)findViewById(R.id.tv_updatedText);
         tv_updatedText2 = (TextView) findViewById(R.id.tv_updatedText2);
         refreshButton = (ImageView) findViewById(R.id.image_refresh);
+        rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
 
         // Timer for every minute we update the period of time we updated the rates
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
-            public int i=1;
+
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
                         //Display last update to the UI
-                        tv_updatedText.setText("Updated " + i++ + " mins ago");
+                        tv_updatedText.setText("Updated " + updateTimer++ + " mins ago");
 
                     }
                 });
             }
         }, 0, 60000);
 
-        // Rotate animation
-        rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-        refreshButton.setAnimation(rotateAnimation);
+
 
 
         // Get Date and time from last update
@@ -88,24 +88,7 @@ public class MainActivity extends AppCompatActivity {
         int year = rightNow.get(Calendar.YEAR);
 
         // Display Date and time to the UI
-        String strHour = String.valueOf(hour);;
-        String strMinutes = String.valueOf(minutes);
-        String strDay = String.valueOf(day);
-        String strMonth = String.valueOf(month);
-        if(hour<10){
-            strHour = "0" + strHour;
-        }
-        if(minutes<10){
-            strMinutes = "0" + strHour;
-        }
-        if(day <10){
-            strDay = "0" + strDay;
-        }
-        if(month<10){
-            strMonth = "0" + month;
-        }
-        tv_updatedText2.setText("at "+ strHour + ":"+ strMinutes + " " + strDay + "-" + strMonth + "-" + year);
-
+        displayTime();
 
         // Call API 1 and Execute
         String urlApi1 = "http://10.0.2.2/API's/api1.php";
@@ -115,9 +98,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshButton(View view){
-        // Refresh Home Page
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+
+        // Updating date and time and resetting the timer
+        updateTimer =1;
+        displayTime();
+
+        // Recalling API1 to get the latest rates
+        String urlApi1 = "http://10.0.2.2/API's/api1.php";
+        api1 = new apiCaller1();
+        api1.execute(urlApi1);
+
+        // Rotate animation
+        refreshButton.setAnimation(rotateAnimation);
+
     }
 
     public class apiCaller1 extends AsyncTask<String,Void,String> {
@@ -193,5 +186,34 @@ public class MainActivity extends AppCompatActivity {
         goToCalculator.putExtra(sellDailyRate,sellText.getText().toString());
 
         startActivity(goToCalculator);
+    }
+    public void displayTime(){
+        // Get Date and time from last update
+        Calendar rightNow = Calendar.getInstance();
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        int minutes = rightNow.get(Calendar.MINUTE);
+        int day = rightNow.get(Calendar.DAY_OF_MONTH);
+        int month = rightNow.get(Calendar.MONTH)+1;
+        int year = rightNow.get(Calendar.YEAR);
+
+        // Display Date and time to the UI
+        String strHour = String.valueOf(hour);;
+        String strMinutes = String.valueOf(minutes);
+        String strDay = String.valueOf(day);
+        String strMonth = String.valueOf(month);
+        if(hour<10){
+            strHour = "0" + strHour;
+        }
+        if(minutes<10){
+            strMinutes = "0" + strHour;
+        }
+        if(day <10){
+            strDay = "0" + strDay;
+        }
+        if(month<10){
+            strMonth = "0" + month;
+        }
+        tv_updatedText2.setText("at "+ strHour + ":"+ strMinutes + " " + strDay + "-" + strMonth + "-" + year);
+
     }
 }

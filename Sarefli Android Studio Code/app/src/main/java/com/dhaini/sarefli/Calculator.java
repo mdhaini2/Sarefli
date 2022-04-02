@@ -140,11 +140,11 @@ public class Calculator extends AppCompatActivity {
         String buyRate = intent.getStringExtra(MainActivity.buyDailyRate).split(" ")[3].replace(",","");
         String sellRate = intent.getStringExtra(MainActivity.sellDailyRate).split(" ")[3].replace(",","");
 
-        //constructing api2 url and adding the data retrieved to it
+        // Constructing api2 url and adding the data retrieved to it
         String urlApi2 = "http://10.0.2.2/API's/api2.php?Amount="+amount+"&Internal="+internal+"&External="+external
                 +"&Daily_Rate_Buy="+buyRate+"&Daily_Rate_Sell="+sellRate;
 
-        //call api2 and execute
+        // Call api2 to get the results of this conversion and adding it to our database.
         api2 = new apiCaller2();
         api2.execute(urlApi2);
 
