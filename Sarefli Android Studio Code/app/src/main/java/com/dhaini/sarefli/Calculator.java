@@ -179,4 +179,4 @@ public class Calculator extends AppCompatActivity {
             toCurrency.setImageResource(R.drawable.usbar);
         }
     }
-}
+} //
