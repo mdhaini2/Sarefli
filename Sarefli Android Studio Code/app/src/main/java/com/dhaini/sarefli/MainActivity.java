@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
-    // API calls as strings
+    // Data recieved from Intent
     public static final String buyDailyRate = "com.dhaini.sarefli.dhaini.buyDailyRate";
     public static final String sellDailyRate = "com.dhaini.sarefli.dhaini.sellDailyRate";
 

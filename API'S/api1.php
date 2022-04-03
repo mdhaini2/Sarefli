@@ -7,7 +7,7 @@ if(!$html = file_get_contents('https://lirarate.org/wp-json/lirarate/v2/rates?cu
     $error = "Error";
     echo json_encode($error);
 }
- // Else we fetch the latest sell and buy rates from the api.
+ // Else fetch the latest sell and buy rates from the API
 else{
 
 $htmlJson = json_decode($html, true);
