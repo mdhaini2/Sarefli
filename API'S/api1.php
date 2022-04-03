@@ -3,7 +3,7 @@
 include("simple_html_dom.php"); 
 
 // Send error request message incase of error 401
-if(!$html = file_get_contents('https://lirarate.org/wp-json/lirarate/v2/rates?currency=LBP')) {
+if(!$html = @file_get_contents('https://lirarate.org/wp-json/lirarate/v2/rates?currency=LBP')) {
     $error = "Error";
     echo json_encode($error);
 }

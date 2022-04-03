@@ -114,7 +114,6 @@ public class Calculator extends AppCompatActivity {
                 String buyAt = "Buy " + String.valueOf(formatter.format(bigDecimalBuy));
                 String sellAt = "Sell " + String.valueOf(formatter.format(bigDecimalSell));
 
-
                 // Displaying on the UI
                 buyAtRate.setText(buyAt + " " + to);
                 sellAtRate.setText(sellAt + " " + to);
