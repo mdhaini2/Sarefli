@@ -26,8 +26,8 @@ if($internal == "USD"){
 else{
     $resultBuy = $amount / $dailyRateBuy;
     $resultSell = $amount / $dailyRateSell;
-    $resultBuy = round($resultBuy, 3);
-    $resultSell = round($resultSell, 3);
+    $resultBuy["Buy"] = round($resultBuy, 3);
+    $resultSell["Sell"] = round($resultSell, 3);
 }
 // Query to store the conversion in the database ("Conversions_history")
 $query = $mysqli->prepare("INSERT INTO conversions_history (amount,internal,external,buy_daily_rate,sell_daily_rate,buy_result,sell_result,time) VALUES('$amount','$internal',
@@ -36,6 +36,11 @@ $query = $mysqli->prepare("INSERT INTO conversions_history (amount,internal,exte
 //  Executing the query
 $query->execute(); 
 
+$ratesResults = (object) [
+    'Buy at' => $resultBuy,
+    'Sell at' => $resultSell
+];
+
  // Return the buy and sell result rates as JSON objects
-echo json_encode($resultBuy)." ".json_encode($resultSell);
+echo json_encode($ratesResults);
 ?>

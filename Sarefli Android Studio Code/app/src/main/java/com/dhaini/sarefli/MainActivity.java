@@ -18,6 +18,7 @@ import java.util.TimerTask;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,6 +26,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -135,25 +139,22 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
             try {
-
+                // Using formatter function to place a comma every 3 digits
                 DecimalFormat formatter = new DecimalFormat("#,###");
 
-                // Splitting the returned values from the API
-                String[] splitValues = values.split("]");
+                // Getting the values returned from API 1 as JSON Object
+                JSONObject json = new JSONObject(values);
 
-                // Getting the buy rate and its date
-                String[] splitBuy = splitValues[0].split(",");
+                // Getting the buy rate
+                String buyRate = String.valueOf(formatter.format(json.getInt("Buy")));
 
-                // Using formatter function to place a comma every 3 digits
-                String buyRate = String.valueOf(formatter.format(Integer.parseInt(splitBuy[1])));
-
-                // Getting the sell rate and its date
-                String[] splitSell = splitValues[1].split(",");
-                String sellRate = String.valueOf(formatter.format(Integer.parseInt(splitSell[1])));
+                // Getting the sell rate
+                String sellRate = String.valueOf(formatter.format(json.getInt("Sell")));
 
                 // Setting the updated buy and sell rates to the interface
                 buyText.setText("1 USD at " + buyRate + " LBP");
                 sellText.setText("1 USD at " + sellRate + " LBP");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,6 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -98,33 +101,23 @@ public class Calculator extends AppCompatActivity {
             try {
 
                 NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-                values.replace("\"\"", "");
 
-                // Splitting the buy and sell results rates returned from API 2
-                String[] splitValues = values.split(" ");
-                BigDecimal bigDecimalBuy = new BigDecimal(splitValues[0].trim());
-                BigDecimal bigDecimalSell = new BigDecimal(splitValues[1].trim());
+                Log.i("Values",values);
+
+                // Getting the values from API 2 as JSON Object
+                JSONObject json = new JSONObject(values);
+
+                // Getting the buy and sell results rates returned from API 2. Using BigDecimal class in case were dealing with huge numbers.
+                BigDecimal bigDecimalBuy = new BigDecimal(json.getString("Buy at"));
+                BigDecimal bigDecimalSell = new BigDecimal(json.getString("Sell at"));
 
                 String buyAt = "Buy " + String.valueOf(formatter.format(bigDecimalBuy));
                 String sellAt = "Sell " + String.valueOf(formatter.format(bigDecimalSell));
 
-                // SpannableStringBuilder containing text to display allowing us to responsively change the result value
-                SpannableString sbBuy = new SpannableString(buyAt);
-                SpannableString sbSell = new SpannableString(sellAt);
-
-                // Create a bold StyleSpan to be used on the SpannableStringBuilder
-                StyleSpan bold = new StyleSpan(Typeface.BOLD);
-
-                // Span the first 2 and 3 letters of both result texts respectively
-                sbBuy.setSpan(bold, 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                sbSell.setSpan(bold, 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                sbBuy.setSpan(bold, 0, 2, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
-                sbSell.setSpan(bold, 0, 3, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 // Displaying on the UI
-                buyAtRate.setText(sbBuy + " " + to);
-                sellAtRate.setText(sbSell + " " + to);
+                buyAtRate.setText(buyAt + " " + to);
+                sellAtRate.setText(sellAt + " " + to);
 
             } catch (Exception e) {
                 e.printStackTrace();

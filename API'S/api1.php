@@ -17,10 +17,15 @@ $buyRates = reset($htmlJson);
 $lastBuyRate = end($buyRates);
 
 // Get the latest sell rate
-$sellRates = end($htmlJson);
-$lastSellRate = end($sellRates);
+$sellRates["Sell"] = end($htmlJson);
+$lastSellRate["Buy"] = end($sellRates);
+
+$ratesValues = (object) [
+    'Buy' => end($lastBuyRate),
+    'Sell' => end($lastSellRate)
+];
 
 // Return the buy and sell rates as JSON objects
-echo  json_encode($lastSellRate). json_encode($lastBuyRate);        
+echo  json_encode($ratesValues);       
 }
 
